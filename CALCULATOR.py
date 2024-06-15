@@ -1,61 +1,41 @@
-import tkinter as tk
+def calculator():
+    print("Welcome to the simple calculator!")
 
-class Calculator(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Calculator")
-        self.geometry("300x400")
-        self.resizable(0, 0)
-        
-        self.expression = ""
-        
-        self.display = tk.Entry(self, font=("Arial", 24), borderwidth=2, relief="ridge")
-        self.display.grid(row=0, column=0, columnspan=4, padx=10, pady=10, sticky="nsew")
+    # Prompt user to input the first number
+    num1 = float(input("Enter the first number: "))
 
-        buttons = [
-            '7', '8', '9', '/', 
-            '4', '5', '6', '*', 
-            '1', '2', '3', '-', 
-            '0', '.', '=', '+'
-        ]
-        
-        row_val = 1
-        col_val = 0
-        
-        for button in buttons:
-            action = lambda x=button: self.click_event(x)
-            if button != '=':
-                tk.Button(self, text=button, width=5, height=2, command=action).grid(row=row_val, column=col_val, padx=5, pady=5)
-            else:
-                tk.Button(self, text=button, width=5, height=2, command=action, bg="lightblue").grid(row=row_val, column=col_val, padx=5, pady=5, rowspan=2, sticky="nsew")
+    # Prompt user to input the second number
+    num2 = float(input("Enter the second number: "))
 
-            col_val += 1
-            if col_val > 3:
-                col_val = 0
-                row_val += 1
-        
-        tk.Button(self, text="C", width=5, height=2, command=self.clear_display, bg="lightcoral").grid(row=5, column=0, padx=5, pady=5, columnspan=4, sticky="nsew")
-    
-    def click_event(self, key):
-        if key == '=':
-            try:
-                result = str(eval(self.expression))
-                self.display.delete(0, tk.END)
-                self.display.insert(tk.END, result)
-                self.expression = result
-            except Exception as e:
-                self.display.delete(0, tk.END)
-                self.display.insert(tk.END, "Error")
-                self.expression = ""
+    # Display operation choices
+    print("Choose the operation you want to perform:")
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+
+    # Prompt user to input the operation choice
+    choice = input("Enter your choice (1/2/3/4): ")
+
+    # Perform the calculation based on user choice and display the result
+    if choice == '1':
+        result = num1 + num2
+        print(f"The result of addition is: {result}")
+    elif choice == '2':
+        result = num1 - num2
+        print(f"The result of subtraction is: {result}")
+    elif choice == '3':
+        result = num1 * num2
+        print(f"The result of multiplication is: {result}")
+    elif choice == '4':
+        if num2 != 0:
+            result = num1 / num2
+            print(f"The result of division is: {result}")
         else:
-            self.expression += str(key)
-            self.display.delete(0, tk.END)
-            self.display.insert(tk.END, self.expression)
-    
-    def clear_display(self):
-        self.expression = ""
-        self.display.delete(0, tk.END)
+            print("Error! Division by zero is not allowed.")
+    else:
+        print("Invalid choice! Please select a valid operation.")
 
-if __name__ == "__main__":
-    app = Calculator()
-    app.mainloop()
+
+# Run the calculator
+calculator()
